@@ -1,0 +1,32 @@
+body{
+    background-color: #eaeff2;
+}
+
+.navbar-laravel{
+    background-color: #336699;
+}
+
+.card-body
+{
+    background-color: #1b3249;
+}
+
+label{
+    color: white;
+}
+
+.navbar-brand, .navbar-nav, .whiteText
+{
+    color: white !important;
+}
+
+.btn-primary
+{
+    background-color: #336699 !important;
+    border-color: #336699;
+}
+
+.btn-primary:hover{
+    background-color: #295179 !important;
+    border-color: #295179;
+}
