@@ -15,9 +15,8 @@
  * Check if the user is authentificated. If not redirect to login route
  */
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('home');
-    });
+    
+    Route::resource('customers', 'CustomerController');
 
 });
 
