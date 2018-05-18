@@ -92,9 +92,7 @@
             
                     <div class="signout">
                         <li>
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
+                            <a href="{{ route('logout') }}">
                                 <i class="fa fa-sign-out fa-lg"></i> Déconnexion
                             </a> 
                         </li>

@@ -23,7 +23,7 @@ class LoginTest extends TestCase
             ->type($user->username, 'username')
             ->type('testpass123', 'password')
             ->press('Login')
-            ->see('Successfully logged in')
-            ->onPage('/dashboard');
+            ->see('Gestion des clients')
+            ->onPage('/customers');
     }
 }
