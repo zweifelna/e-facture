@@ -5,6 +5,7 @@ body{
 
 .navbar-laravel{
     background-color: #336699;
+    z-index: 5;
 }
 
 .card-body
@@ -44,9 +45,11 @@ label{
     font-weight: 200;
     background-color: #2e353d;
     position: fixed;
+    top: 0px;
     width: 300px;
     height: 100%;
     color: #e1ffff;
+    
   }
   .nav-side-menu .brand {
     background-color: #23282e;
@@ -54,6 +57,7 @@ label{
     display: block;
     text-align: center;
     font-size: 18px;
+    padding-top: 30px;
   }
   .nav-side-menu .toggle-btn {
     display: none;
