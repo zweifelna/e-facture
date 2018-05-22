@@ -11,7 +11,7 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                <table id="table_id" class="display">
+                <table id="table_id" class="display table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Numéro</th>

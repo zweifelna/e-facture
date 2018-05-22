@@ -17,6 +17,9 @@
 Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('customers', 'CustomerController');
+    Route::post('customers/store', 'CustomerController@store');
+
+    Route::get('/', 'CustomerController@index');
 
 });
 

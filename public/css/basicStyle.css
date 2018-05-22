@@ -21,6 +21,11 @@ label{
     color: white !important;
 }
 
+.blackText
+{
+  color: black;
+}
+
 .btn-primary
 {
     background-color: #336699 !important;
@@ -151,7 +156,7 @@ label{
       margin-top: 80px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1400px) {
     .nav-side-menu {
       position: relative;
       width: 100%;

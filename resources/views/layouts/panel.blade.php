@@ -28,7 +28,10 @@
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
     <script type="text/javascript">
         $(document).ready( function () {
-            $("#table_id").DataTable();
+            $("#table_id").DataTable( {
+
+                "responsive": true
+            } );
         });
     </script>
     
@@ -77,8 +80,8 @@
                             </a>
                         </li>
                         <ul class="sub-menu collapse" id="customers">
-                                <li class="active"><a href="#">Liste des clients</a></li>
-                                <li><a href="#">Ajouter un client</a></li>
+                                <li class="active"><a href="{{ url('/customers') }}">Liste des clients</a></li>
+                                <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
                             </ul>
                         <li data-toggle="collapse" data-target="#products" class="collapsed">
                             <a href="#"><i class="fa fa-calculator fa-lg"></i>  Factures <span class="arrow"></span></a>
@@ -89,13 +92,17 @@
                             <li><a href="#">Générer un pdf</a></li>
                             
                         </ul>
-            
+                        
                     <div class="signout">
                         <li>
-                            <a href="{{ route('logout') }}">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
                                 <i class="fa fa-sign-out fa-lg"></i> Déconnexion
                             </a> 
                         </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                     </ul>
                 </div>
