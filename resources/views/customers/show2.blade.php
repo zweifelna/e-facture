@@ -11,12 +11,14 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                <table id="table_id" class="display table table-striped table-bordered" style="width:100%">
+                <table id="table_id" class="display">
                         <thead>
                             <tr>
+                                <th>Numéro</th>
                                 <th>Nom</th>
                                 <th>Prénom</th>
                                 <th>Société</th>
+                                <th>Adresse</th>
                                 <th>Tél</th>
                                 <th>Fax</th>
                                 <th>Mobile</th>
@@ -27,17 +29,17 @@
                             <?php
                                 foreach ($customers as $customer) {
                                     ?>
-                                    <a href='{{'/customers/'.$customer->id}}'>
-                                        <tr>
-                                            <td>{{$customer->name}}</td>
-                                            <td>{{$customer->firstName}}</td>
-                                            <td>{{$customer->company}}</td>
-                                            <td>{{$customer->phone}}</td>
-                                            <td>{{$customer->fax}}</td>
-                                            <td>{{$customer->mobilePhone}}</td>
-                                            <td>{{$customer->email}}</td>
-                                        </tr>
-                                    </a>
+                                    <tr>
+                                        <td>{{$customer->id}}</td>
+                                        <td>{{$customer->name}}</td>
+                                        <td>{{$customer->firstName}}</td>
+                                        <td>{{$customer->company}}</td>
+                                        <td>{{$customer->address}}</td>
+                                        <td>{{$customer->phone}}</td>
+                                        <td>{{$customer->fax}}</td>
+                                        <td>{{$customer->mobilePhone}}</td>
+                                        <td>{{$customer->email}}</td>
+                                    </tr>
                                     <?php
                                 }
                                 ?>

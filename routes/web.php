@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('customers', 'CustomerController');
     Route::post('customers/store', 'CustomerController@store');
+    Route::post('customers/update', 'CustomerController@update');
 
     Route::get('/', 'CustomerController@index');
 
