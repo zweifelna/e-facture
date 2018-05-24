@@ -75,14 +75,14 @@
                 <div class="menu-list">
                     <ul id="menu-content" class="menu-content collapse out">
                         <li data-toggle="collapse" data-target="#customers" class="collapsed active">
-                        <i class="fa fa-address-book fa-lg"></i>  Clients <span class="arrow"></span>
+                        <i class="fa fa-address-book fa-lg fa-panel"></i>  Clients <span class="arrow"></span>
                         </li>
                         <ul class="sub-menu collapse" id="customers">
                                 <li class="active"><a href="{{ url('/customers') }}">Liste des clients</a></li>
                                 <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
                             </ul>
                         <li data-toggle="collapse" data-target="#invoices" class="collapsed">
-                            <i class="fa fa-calculator fa-lg"></i>  Factures <span class="arrow"></span>
+                            <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
                         </li>
                         <ul class="sub-menu collapse" id="invoices">
                             <li class=""><a href="">Liste des factures</a></li>
@@ -95,7 +95,7 @@
                         <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out fa-lg"></i> Déconnexion
+                                <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
                             </a> 
                         </li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

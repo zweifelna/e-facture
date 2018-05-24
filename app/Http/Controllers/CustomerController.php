@@ -79,4 +79,14 @@ class CustomerController extends Controller
         return view('customers.show', compact('customer'));
     }
     
+    /**
+     * Delete the customer
+     */
+    public function destroy($id)
+    {
+        $customer = Customer::find($id);
+        $customer->delete();
+        return back();
+
+    }
 }

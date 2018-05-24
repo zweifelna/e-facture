@@ -18,26 +18,26 @@
                                 <th>Prénom</th>
                                 <th>Société</th>
                                 <th>Tél</th>
-                                <th>Fax</th>
-                                <th>Mobile</th>
                                 <th>Mail</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 foreach ($customers as $customer) {
                                     ?>
-                                    <a href='{{'/customers/'.$customer->id}}'>
                                         <tr>
                                             <td>{{$customer->name}}</td>
                                             <td>{{$customer->firstName}}</td>
                                             <td>{{$customer->company}}</td>
                                             <td>{{$customer->phone}}</td>
-                                            <td>{{$customer->fax}}</td>
-                                            <td>{{$customer->mobilePhone}}</td>
                                             <td>{{$customer->email}}</td>
+                                            <td>
+                                                <a href=""><i class="fa fa-search fa-lg blackText"></i></a>
+                                                <a href="{{ url('/customers/'.$customer->id) }}"><i class="fa fa-edit fa-lg blackText"></i></a>
+                                                <a href="{{ url('/customers/destroy/'.$customer->id) }}" onclick="return confirm('Souhaitez-vous vraiment supprimer ce client ?')"><i class="fa fa-times-circle fa-lg blackText"></i></a>
+                                            </td>
                                         </tr>
-                                    </a>
                                     <?php
                                 }
                                 ?>

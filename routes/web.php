@@ -12,18 +12,22 @@
 */
 
 /**
- * Check if the user is authentificated. If not redirect to login route
+ * Check if the user is authentificated. If not, redirect to login route
  */
 Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('customers', 'CustomerController');
     Route::post('customers/store', 'CustomerController@store');
     Route::post('customers/update', 'CustomerController@update');
+    Route::get('/customers/destroy/{n}', 'CustomerController@destroy');
 
     Route::get('/', 'CustomerController@index');
 
 });
 
+/**
+ * Authentification routes
+ */
 Auth::routes();
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
