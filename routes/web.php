@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Invoice routes
      */
     Route::resource('invoices', 'InvoiceController');
+    Route::post('invoices/store', 'InvoiceController@store');
 
 });
 

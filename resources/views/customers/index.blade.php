@@ -11,7 +11,7 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                <table id="table_id" class="display table table-striped table-bordered" style="width:100%">
+                <table id="customer_table" class="display table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nom</th>
@@ -34,8 +34,8 @@
                                             <td>{{$customer->email}}</td>
                                             <td>
                                                 <a href=""><i class="fa fa-search fa-lg blackText"></i></a>
-                                                <a href="{{ url('/customers/'.$customer->id) }}"><i class="fa fa-edit fa-lg blackText"></i></a>
-                                                <a href="{{ url('/customers/destroy/'.$customer->id) }}" onclick="return confirm('Souhaitez-vous vraiment supprimer ce client ?')"><i class="fa fa-times-circle fa-lg blackText"></i></a>
+                                                <a href="{{ url('/invoices/'.$customer->id) }}"><i class="fa fa-edit fa-lg blackText"></i></a>
+                                                <a href="{{ url('/invoices/destroy/'.$customer->id) }}" onclick="return confirm('Souhaitez-vous vraiment supprimer cette facture ?')"><i class="fa fa-times-circle fa-lg blackText"></i></a>
                                             </td>
                                         </tr>
                                     <?php

@@ -28,9 +28,17 @@
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
     <script type="text/javascript">
         $(document).ready( function () {
-            $("#table_id").DataTable( {
+            $("#customer_table").DataTable( {
 
                 "responsive": true
+                
+            } );
+
+            $("#invoice_table").DataTable( {
+
+            "responsive": true
+            "searching": false
+
             } );
         });
     </script>
@@ -85,9 +93,9 @@
                             <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
                         </li>
                         <ul class="sub-menu collapse" id="invoices">
-                            <li class=""><a href="">Liste des factures</a></li>
-                            <li><a href="">Ajouter une facture</a></li>
-                            <li><a href="">Générer un pdf</a></li>
+                            <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
+                            <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
+                            <li><a href="{{ url('') }}">Générer un pdf</a></li>
                             
                         </ul>
                         
