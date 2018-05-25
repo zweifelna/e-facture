@@ -16,12 +16,19 @@
  */
 Route::group(['middleware' => 'auth'], function () {
     
+    /**
+     * Customer routes
+     */
     Route::resource('customers', 'CustomerController');
     Route::post('customers/store', 'CustomerController@store');
     Route::post('customers/update', 'CustomerController@update');
     Route::get('/customers/destroy/{n}', 'CustomerController@destroy');
-
     Route::get('/', 'CustomerController@index');
+
+    /**
+     * Invoice routes
+     */
+    Route::resource('invoices', 'InvoiceController');
 
 });
 

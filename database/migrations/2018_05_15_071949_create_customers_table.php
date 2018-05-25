@@ -25,7 +25,8 @@ class CreateCustomersTable extends Migration
             $table->integer('phone')->unsigned();
             $table->integer('mobilePhone')->unsigned();
             $table->integer('fax')->unsigned();
-            $table->string('category', 30);
+            $table->integer('category_id', 10);
+            $table->timestamps();
         });
     }
 

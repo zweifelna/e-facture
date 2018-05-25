@@ -7,13 +7,13 @@ use App\Http\Requests\CustomerRequest;
 use App\models\Customer;
 use App\models\Category;
 
-class CustomerController extends Controller
+class InvoiceController extends Controller
 {
 
     public function create()
     {
         $categories = Category::pluck('name', 'id');
-        return view('customers.create', compact('categories'));
+        return view('invoices.create', compact('categories'));
     }
 
     public function store(CustomerRequest $request)

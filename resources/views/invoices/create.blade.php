@@ -12,7 +12,7 @@
     <div class="row justify-content-center">
             <div class="col-md-8">
                     <div class="form-group">
-                    {!! Form::open(['url' => '/customers/store']) !!}
+                    {!! Form::open(['url' => '/invoices/store']) !!}
                         {{ Form::label('name', 'Nom', ['class' => 'blackText']) }}
                         <br>
                         {{ Form::text('name', '', ['class' => 'blackText, form-control']) }}
@@ -55,7 +55,7 @@
                         <br>
                         {{ Form::label('category', 'Catégorie', ['class' => 'blackText']) }}
                         <br>
-                        {{ Form::select('category_id', $categories, null, array('class'=>'form-control')) }}
+                        {{ Form::text('category', '', ['class' => 'blackText, form-control']) }}
                         <br>
                         {{Form::submit('Ajouter', ['class' => 'btn btn-primary'])}}
 

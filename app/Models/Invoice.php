@@ -12,6 +12,6 @@ class Invoice extends Model
      * @var array
      */
     protected $fillable = [
-        'customer_id', 'date', 'description', 'hourlyRate', 'hourNumbre', 'HTAmount', 'TTCAmount', 'TVA',
+        'customer_id', 'limitDate', 'description', 'hourlyRate', 'hourNumbre', 'HTAmount', 'TTCAmount', 'TVA', 'customer_id', 'status_id'
     ];
 }

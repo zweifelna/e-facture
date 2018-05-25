@@ -15,7 +15,7 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date');
+            $table->date('limitDate');
             $table->string('description');
             $table->double('hourlyRate');
             $table->double('hourNumber');
@@ -25,6 +25,8 @@ class CreateInvoicesTable extends Migration
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('status_id');
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('status_id')->references('id')->on('status');
+            $table->timestamps();
         });
     }
 
