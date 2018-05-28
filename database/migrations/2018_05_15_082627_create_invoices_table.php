@@ -21,7 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->double('hourNumber');
             $table->double('HTAmount');
             $table->double('TTCAmount');
-            $table->tinyInteger('TVA');
+            $table->double('TVA');
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('status_id');
             $table->foreign('customer_id')->references('id')->on('customers');

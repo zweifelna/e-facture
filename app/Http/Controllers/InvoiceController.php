@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Request;
 use App\Http\Requests\InvoiceRequest;
+use App\Http\Requests\ServiceRequest;
 use App\models\Invoice;
 use App\models\Customer;
 use App\models\Status;
@@ -13,7 +14,9 @@ use App\models\Service;
 
 class InvoiceController extends Controller
 {
-
+    /**
+     * Return invoice's creation view
+     */
     public function create()
     {
         $statuses = Status::pluck('description', 'id');
@@ -21,6 +24,9 @@ class InvoiceController extends Controller
         return view('invoices.create', compact('statuses', 'customers'));
     }
 
+    /**
+     * Store the invoice in the database
+     */
     public function store(InvoiceRequest $request)
     {
         Invoice::create([
@@ -32,25 +38,55 @@ class InvoiceController extends Controller
             'status_id' => $request->status_id,
         ]);
 
-        $statuses = Status::pluck('description', 'id');
-        $customers = Customer::pluck('name', 'id');
         $invoices = DB::table('invoices')
             ->leftjoin('statuses', 'statuses.id', '=', 'invoices.status_id')
             ->leftjoin('customers', 'invoices.customer_id', '=', 'customers.id')
             ->get();
             
-		return view('invoices.index', compact('invoices', 'customers'));
+		return view('invoices.index', compact('invoices'));
     }
 
     /**
-     * Return all the customers
+     * Store a new invoice's service in the database
+     */
+    public function addService(ServiceRequest $request)
+    {
+
+        $htAmount = $request->hourNumber * $request->hourlyRate;
+        $tvaAmount = $htAmount * $request->TVA;
+        $ttcAmount = $htAmount + $tvaAmount;
+
+        Service::create([
+            'description' => $request->description,
+            'hourNumber' => $request->hourNumber,
+            'hourlyRate' => $request->hourlyRate,
+            'HTAmount' => $htAmount,
+            'TTCAmount' => $ttcAmount,
+            'TVA' => $request->TVA,
+            'TVAmount' => $tvaAmount,
+            'invoice_id' => $request->invoice_id,
+        ]);
+
+        $services = Service::where('invoice_id', $request->invoice_id);
+
+        $invoices = DB::table('invoices')
+        ->join('statuses', 'statuses.id', '=', 'invoices.status_id')
+        ->join('customers', 'customers.id', '=', 'invoices.customer_id')
+        ->where('invoices.id', '=', $request->invoice_id)
+        ->get();
+        
+            return back(compact('invoices', 'services'));
+    }
+
+    /**
+     * Return all the invoices
      */
     public function index()
 	{
 
-        $invoices = DB::table('invoices')
+        $invoices = DB::table('customers')
+        ->leftjoin('invoices', 'customers.id', '=', 'invoices.customer_id')
         ->leftjoin('statuses', 'statuses.id', '=', 'invoices.status_id')
-        ->leftjoin('customers', 'invoices.customer_id', '=', 'customers.id')
         ->get();
 
 		return view('invoices.index', compact('invoices'));
@@ -58,18 +94,23 @@ class InvoiceController extends Controller
 
 
     /**
-     * Return customer's details
+     * Return invoice's details
      */
     public function show($id)
     {
-        $customer = Customer::find($id);
-        $categories = Category::pluck('name', 'id');
+        $invoices = DB::table('invoices')
+        ->join('statuses', 'statuses.id', '=', 'invoices.status_id')
+        ->join('customers', 'customers.id', '=', 'invoices.customer_id')
+        ->where('invoices.id', '=', $id)
+        ->get();
+        
+        $services = Service::where('invoice_id', $id);
 
-        return view('customers.update', compact('customer', 'categories'));
+        return view('invoices.show', compact('invoices', 'services', 'id'));
     }
 
     /**
-     * Customer's update with request's datas
+     * Invoice's update with request's datas
      */
     public function update(CustomerRequest $request)
     {
@@ -95,7 +136,7 @@ class InvoiceController extends Controller
     }
     
     /**
-     * Delete the customer
+     * Delete the invoice
      */
     public function destroy($id)
     {

@@ -16,6 +16,10 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');
+            $table->double('HTAmount');
+            $table->double('TTCAmount');
+            $table->double('TVA');
+            $table->double('TVAAmount');
             $table->timestamps();
         });
     }

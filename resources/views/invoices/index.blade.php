@@ -29,17 +29,20 @@
                                             <td>{{$invoice->limitDate}}</td>
                                             <td>{{$invoice->description}}</td>
                                             <td>
-                                                <a href=""><i class="fa fa-search fa-lg blackText"></i></a>
-                                                <a href="{{ url('/customers/'.$invoice->id) }}"><i class="fa fa-edit fa-lg blackText"></i></a>
-                                                <a href="{{ url('/customers/destroy/'.$invoice->id) }}" onclick="return confirm('Souhaitez-vous vraiment supprimer ce client ?')"><i class="fa fa-times-circle fa-lg blackText"></i></a>
+                                                <a href="{{ url('/invoices/'.$invoice->id) }}"><i class="fa fa-search fa-lg blackText"></i></a>
+                                                <a href="{{ url('/invoices/edit/'.$invoice->id) }}"><i class="fa fa-edit fa-lg blackText"></i></a>
+                                                <a href="{{ url('/invoices/destroy/'.$invoice->id) }}" onclick="return confirm('Souhaitez-vous vraiment supprimer ce client ?')"><i class="fa fa-times-circle fa-lg blackText"></i></a>
                                             </td>
                                         </tr>
+                                             
+                                       
                                     <?php
                                 }
                                 ?>
                         </tbody>
                 </table>
-            </div>
+
+                
         </div>
 </div>
 

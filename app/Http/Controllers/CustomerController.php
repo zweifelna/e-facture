@@ -51,7 +51,7 @@ class CustomerController extends Controller
     /**
      * Return customer's details
      */
-    public function show($id)
+    public function edit($id)
     {
         $customer = Customer::find($id);
         $categories = Category::pluck('name', 'id');
