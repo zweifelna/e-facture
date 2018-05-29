@@ -1,5 +1,15 @@
 @extends('layouts.panel')
 
+@section('script')
+<script type="text/javascript">
+    $(document).ready( function () {
+        $("#customer_table").DataTable( {
+            "iDisplayLength": 10
+            
+        } );
+    });
+</script>
+@endsection
 
 @section('content')
 <div class="container">
@@ -11,7 +21,7 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                <table id="customer_table" class="display table table-striped table-bordered" style="width:100%">
+                <table id="customer_table" class="display table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nom</th>

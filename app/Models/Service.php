@@ -12,6 +12,6 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'description',
+        'description', 'hourlyRate', 'hourNumber', 'HTAmount', 'TTCAmount', 'TVA', 'TVAAmount', 'invoice_id'
     ];
 }

@@ -28,7 +28,7 @@ label{
 
 .blackText
 {
-  color: black;
+  color: rgba(0, 0, 0, 0.767);
 }
 
 .btn-primary
@@ -168,11 +168,18 @@ label{
       margin-top: 80px;
   }
 
-  .table-dark
+  .thead-dark, th
   {
-    background-color: #2e353d;
+    background-color: #2e353d !important;
     color: #e1ffffe3;
   }
+
+  .table
+  {
+    margin-bottom: 50px;
+  }
+
+  
 
   @media (min-width: 767px) {
     .nav-side-menu .menu-list .menu-content {

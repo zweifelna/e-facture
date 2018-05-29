@@ -64,7 +64,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request)
     {
-        /** Modifie l'entrée */
+        /** Change the datas */
         $customer = Customer::find($request->id);
         $customer->name = $request->name;
         $customer->firstName = $request->firstName;
@@ -79,7 +79,7 @@ class CustomerController extends Controller
         $customer->category_id = $request->category_id;
         $customer->save();
         
-        /**Récupère les infos pour afficher le client en détail */
+        /**Get the infos to show customer's details */
         $customer = Customer::find($request->id);
         $categories = Category::pluck('name', 'id');
         return view('customers.update', compact('customer', 'categories'));

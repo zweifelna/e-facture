@@ -63,11 +63,27 @@ class InvoiceController extends Controller
             'HTAmount' => $htAmount,
             'TTCAmount' => $ttcAmount,
             'TVA' => $request->TVA,
-            'TVAmount' => $tvaAmount,
+            'TVAAmount' => $tvaAmount,
             'invoice_id' => $request->invoice_id,
         ]);
 
-        $services = Service::where('invoice_id', $request->invoice_id);
+        $services = Service::where('invoice_id', $request->invoice_id)
+                            ->get();
+
+        $invoice = Invoice::find($request->invoice_id);
+        
+        $htAmount = $invoice['HTAmount'] + $htAmount;
+        $ttcAmount = $invoice['TTCAmount'] + $ttcAmount;
+        $tvaAmount = $invoice['TVA'] + $tvaAmount;
+
+        $newInvoice = Invoice::find($request->invoice_id);
+        $newInvoice->HTAmount = $htAmount;
+        $newInvoice->TTCAmount = $ttcAmount;
+        $newInvoice->TVA = $tvaAmount; 
+        
+        $newInvoice->save();
+
+        $id = $request->invoice_id;
 
         $invoices = DB::table('invoices')
         ->join('statuses', 'statuses.id', '=', 'invoices.status_id')
@@ -75,8 +91,12 @@ class InvoiceController extends Controller
         ->where('invoices.id', '=', $request->invoice_id)
         ->get();
         
-            return back(compact('invoices', 'services'));
+        
+
+        return view('invoices.show', compact('invoices', 'services', 'id'));
     }
+
+
 
     /**
      * Return all the invoices
@@ -104,35 +124,44 @@ class InvoiceController extends Controller
         ->where('invoices.id', '=', $id)
         ->get();
         
-        $services = Service::where('invoice_id', $id);
+        $services = Service::where('invoice_id', $id)
+                            ->get();
 
         return view('invoices.show', compact('invoices', 'services', 'id'));
     }
 
     /**
+     * Return customer's details
+     */
+    public function edit($id)
+    {
+        $invoice = Invoice::find($id);
+        $statuses = Status::pluck('description', 'id');
+        $customers = Customer::pluck('name', 'id');
+
+        return view('invoices.edit', compact('invoice', 'statuses', 'customers'));
+    }
+
+    /**
      * Invoice's update with request's datas
      */
-    public function update(CustomerRequest $request)
+    public function update(InvoiceRequest $request)
     {
-        /** Modifie l'entrée */
-        $customer = Customer::find($request->id);
-        $customer->name = $request->name;
-        $customer->firstName = $request->firstName;
-        $customer->company = $request->company;
-        $customer->address = $request->address;
-        $customer->city = $request->city;
-        $customer->postalCode = $request->postalCode;
-        $customer->email = $request->email;
-        $customer->phone = $request->phone;
-        $customer->mobilePhone = $request->mobilePhone;
-        $customer->fax = $request->fax;
-        $customer->category_id = $request->category_id;
-        $customer->save();
+        /** Change the datas */
+        $invoice = Invoice::find($request->id);
+        $invoice->limitDate = $request->limitDate;
+        $invoice->HTAmount = $request->HTAmount;
+        $invoice->TTCAmount = $request->TTCAmount;
+        $invoice->TVA = $request->TVA;
+        $invoice->customer_id = $request->customer_id;
+        $invoice->status_id = $request->status_id;
+        $invoice->save();
         
-        /**Récupère les infos pour afficher le client en détail */
-        $customer = Customer::find($request->id);
-        $categories = Category::pluck('name', 'id');
-        return view('customers.update', compact('customer', 'categories'));
+        /**Get the infos to show invoice's details */
+        $invoice = invoice::find($request->id);
+        $statuses = Status::pluck('description', 'id');
+        $customers = Customer::pluck('name', 'id');
+        return view('invoices.edit', compact('invoice', 'statuses', 'customers'));
     }
     
     /**
@@ -140,9 +169,57 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::find($id);
+        $customer = Invoice::find($id);
         $customer->delete();
         return back();
+
+    }
+
+
+    /**
+     * Delete the service
+     */
+    public function destroyService($id)
+    {
+        $service = Service::find($id);
+
+        $htAmount = $service['HTAmount'];
+        $tvaAmount = $service['TVAAmount'];
+        $ttcAmount = $service['TTCAmount'];
+        $invoiceId = $service['invoice_id'];
+
+        $service->delete();
+
+
+        $services = Service::where('invoice_id', $invoiceId)
+                            ->get();
+
+        $invoice = Invoice::find($invoiceId);
+        
+
+        
+        $htAmount = $invoice['HTAmount'] - $htAmount;
+        $ttcAmount = $invoice['TTCAmount'] - $ttcAmount;
+        $tvaAmount = $invoice['TVA'] - $tvaAmount;
+
+        
+
+        $newInvoice = Invoice::find($invoiceId);
+        $newInvoice->HTAmount = $htAmount;
+        $newInvoice->TTCAmount = $ttcAmount;
+        $newInvoice->TVA = $tvaAmount; 
+        
+        $newInvoice->save();
+
+        $invoices = DB::table('invoices')
+        ->join('statuses', 'statuses.id', '=', 'invoices.status_id')
+        ->join('customers', 'customers.id', '=', 'invoices.customer_id')
+        ->where('invoices.id', '=', $invoiceId)
+        ->get();
+        
+        $id = $invoiceId;
+
+        return view('invoices.show', compact('invoices', 'services', 'id'));
 
     }
 }
