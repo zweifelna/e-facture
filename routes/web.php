@@ -30,12 +30,16 @@ Route::group(['middleware' => 'auth'], function () {
      * Invoice routes
      */
     Route::resource('invoices', 'InvoiceController');
+    Route::get('invoices/{n}', 'InvoiceController@show');
+    Route::get('generate', 'InvoiceController@chooseInvoice');
+    Route::post('generate', 'InvoiceController@generatePDF');
     Route::post('invoices/store', 'InvoiceController@store');
     Route::post('invoices/{n}/services/store', 'InvoiceController@addService');
     Route::get('invoices/edit/{n}', 'InvoiceController@edit');
     Route::get('invoices/destroy/{n}', 'InvoiceController@destroy');
     Route::get('invoices/services/destroy/{n}', 'InvoiceController@destroyService');
     Route::post('invoices/update', 'InvoiceController@update');
+    
 
 });
 

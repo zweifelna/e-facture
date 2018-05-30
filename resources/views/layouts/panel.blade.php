@@ -80,7 +80,7 @@
                         <ul class="sub-menu collapse" id="invoices">
                             <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
                             <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
-                            <li><a href="{{ url('') }}">Générer un pdf</a></li>
+                            <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
                             
                         </ul>
                         

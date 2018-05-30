@@ -11,6 +11,8 @@ use App\models\Invoice;
 use App\models\Customer;
 use App\models\Status;
 use App\models\Service;
+use App\models\Category;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class InvoiceController extends Controller
 {
@@ -51,7 +53,7 @@ class InvoiceController extends Controller
      */
     public function addService(ServiceRequest $request)
     {
-
+        /**Calcul the amounts */
         $htAmount = $request->hourNumber * $request->hourlyRate;
         $tvaAmount = $htAmount * $request->TVA;
         $ttcAmount = $htAmount + $tvaAmount;
@@ -67,9 +69,11 @@ class InvoiceController extends Controller
             'invoice_id' => $request->invoice_id,
         ]);
 
+        /**Reload the service list */
         $services = Service::where('invoice_id', $request->invoice_id)
                             ->get();
 
+        /**Select the service invoice and update it */
         $invoice = Invoice::find($request->invoice_id);
         
         $htAmount = $invoice['HTAmount'] + $htAmount;
@@ -104,9 +108,9 @@ class InvoiceController extends Controller
     public function index()
 	{
 
-        $invoices = DB::table('customers')
-        ->leftjoin('invoices', 'customers.id', '=', 'invoices.customer_id')
-        ->leftjoin('statuses', 'statuses.id', '=', 'invoices.status_id')
+        $invoices = DB::table('invoices')
+        ->join('statuses', 'statuses.id', '=', 'invoices.status_id')
+        ->join('customers', 'customers.id', '=', 'invoices.customer_id')
         ->get();
 
 		return view('invoices.index', compact('invoices'));
@@ -158,11 +162,20 @@ class InvoiceController extends Controller
         $invoice->save();
         
         /**Get the infos to show invoice's details */
-        $invoice = invoice::find($request->id);
+        $invoice = Invoice::find($request->id);
         $statuses = Status::pluck('description', 'id');
         $customers = Customer::pluck('name', 'id');
         return view('invoices.edit', compact('invoice', 'statuses', 'customers'));
     }
+
+    public function chooseInvoice()
+    {
+        $invoices = Invoice::pluck('id', 'id');
+
+        return view('invoices.generate', compact('invoices'));
+    }
+
+
     
     /**
      * Delete the invoice
@@ -222,4 +235,25 @@ class InvoiceController extends Controller
         return view('invoices.show', compact('invoices', 'services', 'id'));
 
     }
+
+    /**
+     * Generate the invoice PDF
+     */
+    public function generatePDF(InvoiceRequest $request)
+    {
+        $invoice = Invoice::find($request->id);
+        $service = Service::where('invoice_id', $invoice->id)->get();
+        $status = Status::where('id', $invoice->status_id)->get();
+        $customer = Customer::where('id', $invoice->customer_id)->get();
+        //$category = Category::where('id', $customer->category_id)->get();
+
+        $pdf = PDF::loadView('invoices.pdf', compact('invoice', 'service', 'status', 'customer'));
+
+        $name = "FactureNo-".$invoice->id.".pdf";
+
+        return $pdf->download($name);
+    }
+
+
+
 }
