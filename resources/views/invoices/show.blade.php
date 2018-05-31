@@ -9,61 +9,50 @@
             <br>
         </div>
     </div>
-    <div class="row justify-content-center">
-            <div class="col-md-8">
-                <table class="table" style="width:100%">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">N°</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Date limite</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Date de création</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                foreach ($invoices as $invoice) {
-                                    ?>
-                                        <tr>
-                                            <td>{{$invoice->id}}</td>
-                                            <td>{{$invoice->name}}</td>
-                                            <td>{{$invoice->limitDate}}</td>
-                                            <td>{{$invoice->description}}</td>
-                                            <td>{{$invoice->created_at}}</td>
-                                            
-                                        </tr>
-                        </tbody>
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Total HT</th>
-                                <th scope="col">Total TVA</th>
-                                <th scope="col">Total TTC</th>
-                                <th scope="col"></th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>{{$invoice->HTAmount}}</td>
-                                            <td>{{$invoice->TVA}}</td>
-                                            <td>{{$invoice->TTCAmount}}</td>
-                                            
-                                        </tr>
-                                             
-                                       
-                                    <?php
-                                }
-                                ?>
-                        </tbody>
-                </table>
+    <div class="row justify-content center">
+        <?php
+            foreach ($invoices as $invoice) {
+                ?>
+                    <div class="col-md-12">
+                        <h4>Client : {{$invoice->name}}</h4>
+                        <h4>Date limite : {{$invoice->limitDate}}</h4>
+                        <h4>Status : {{$invoice->description}}</h4>
+                        <h4>Date de création : {{$invoice->created_at}}</h4>
+                        
+                    </div>
+                    <?php
+                     }
+                ?>
+                
             </div>
+            <br>
+    <div class="row justify-content center">
+            <?php
+                foreach ($invoices as $invoice) {
+                    ?>
+                        <div class="col-md-4">
+                            <h3>Total HT : {{$invoice->HTAmount}}</h4>
+                            
+                        </div>
+                        <div class="col-md-4">
+                            <h3>Total TVA : {{$invoice->TVA}}</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>Total TTC : {{$invoice->TTCAmount}}</h4>
+                        </div>
+                        <?php
+                         }
+                    ?>
+                    
     </div>
+    <br>
+
+
+
     <div class="row justify-content-center">
             <div class="col-md-8">
                 <h2 class="justify-content-center center">Liste des Services</h2>
+                <br>
                 <table class="table" style="width:100%">
                         <thead>
                             <th scope="col">Description</th>
@@ -96,17 +85,8 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                <table class="table">
-                    <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Ajout d'un service</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                </table>
+                    <h2 class="justify-content-center center">Ajout d'un Service</h2>
+                    <br>
                 {!! Form::open(['url' => 'invoices/'.$id.'/services/store']) !!}
                     {{ Form::hidden('invoice_id', $id) }}
                     <p>{{ Form::label('description', 'Description', ['class' => 'blackText']) }}</p>

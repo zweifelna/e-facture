@@ -108,11 +108,7 @@ class InvoiceController extends Controller
     public function index()
 	{
 
-        $invoices = DB::table('invoices')
-        ->join('statuses', 'statuses.id', '=', 'invoices.status_id')
-        ->join('customers', 'customers.id', '=', 'invoices.customer_id')
-        ->get();
-
+        $invoices = Invoice::all();
 		return view('invoices.index', compact('invoices'));
     }
 
@@ -194,6 +190,8 @@ class InvoiceController extends Controller
      */
     public function destroyService($id)
     {
+
+        /**Get the service datas */
         $service = Service::find($id);
 
         $htAmount = $service['HTAmount'];
@@ -201,6 +199,7 @@ class InvoiceController extends Controller
         $ttcAmount = $service['TTCAmount'];
         $invoiceId = $service['invoice_id'];
 
+        /**Delete the service */
         $service->delete();
 
 
@@ -210,7 +209,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($invoiceId);
         
 
-        
+        /**Update the invoice datas */
         $htAmount = $invoice['HTAmount'] - $htAmount;
         $ttcAmount = $invoice['TTCAmount'] - $ttcAmount;
         $tvaAmount = $invoice['TVA'] - $tvaAmount;
@@ -242,12 +241,11 @@ class InvoiceController extends Controller
     public function generatePDF(InvoiceRequest $request)
     {
         $invoice = Invoice::find($request->id);
-        $service = Service::where('invoice_id', $invoice->id)->get();
-        $status = Status::where('id', $invoice->status_id)->get();
-        $customer = Customer::where('id', $invoice->customer_id)->get();
-        //$category = Category::where('id', $customer->category_id)->get();
+        $services = Service::where('invoice_id', $invoice['id'])->get();
+        $status = Status::where('id', $invoice['status_id'])->get();
+        $customers = Customer::where('id', $invoice['customer_id'])->get();
 
-        $pdf = PDF::loadView('invoices.pdf', compact('invoice', 'service', 'status', 'customer'));
+        $pdf = PDF::loadView('invoices.pdf', compact('invoice', 'services', 'status', 'customers'));
 
         $name = "FactureNo-".$invoice->id.".pdf";
 
