@@ -26,7 +26,7 @@
                             <p>{{ Form::select('customer_id', $customers, $invoice->customer_id, array('class'=>'form-control')) }}</p>
                             <p>{{ Form::label('status_id', 'Status', ['class' => 'blackText']) }}</p>
                             <p>{{ Form::select('status_id', $statuses, $invoice->status_id, array('class'=>'form-control')) }}</p>
-                            <p>{{Form::submit('Ajouter', ['class' => 'btn btn-primary'])}}</p>
+                            <p>{{Form::submit('Modifier', ['class' => 'btn btn-primary'])}}</p>
                         {!! Form::close() !!}
                     </div>
             </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
 use App\models\Customer;
 use App\models\Category;
+use Validator;
 
 class CustomerController extends Controller
 {
@@ -18,6 +19,27 @@ class CustomerController extends Controller
 
     public function store(CustomerRequest $request)
     {
+        /**Test the request datas */
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'firstName' => 'required',
+            'company' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'postalCode' => 'required',
+            'email' => 'required',
+            'phone' => 'required|max:4294967295',
+            'mobilePhone' => 'required|max:4294967295',
+            'fax' => 'required|max:4294967295',
+            'category_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('customers/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         Customer::create([
             'name' => $request->name,
             'firstName' => $request->firstName,

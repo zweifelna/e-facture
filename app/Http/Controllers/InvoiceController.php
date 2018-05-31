@@ -242,10 +242,9 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($request->id);
         $services = Service::where('invoice_id', $invoice['id'])->get();
-        $status = Status::where('id', $invoice['status_id'])->get();
         $customers = Customer::where('id', $invoice['customer_id'])->get();
 
-        $pdf = PDF::loadView('invoices.pdf', compact('invoice', 'services', 'status', 'customers'));
+        $pdf = PDF::loadView('invoices.pdf', compact('invoice', 'services', 'customers'));
 
         $name = "FactureNo-".$invoice->id.".pdf";
 

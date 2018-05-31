@@ -43,19 +43,31 @@
 
     #TTCAmount1{
         position: absolute;
-        top: 230px;
+        top: 228px;
         left: 120px;
     }
 
     #TTCAmount2{
         position: absolute;
-        top: 230px;
+        top: 228px;
         left: 420px;
     }
 
     #custName{
         position: absolute;
         top: 230px;
+        left: 720px;
+    }
+
+    #custAddress{
+        position: absolute;
+        top: 250px;
+        left: 720px;
+    }
+
+    #custAddress2{
+        position: absolute;
+        top: 270px;
         left: 720px;
     }
 
@@ -82,6 +94,10 @@
       margin-bottom: 20px;
     }
 
+    #firstPage{
+        page-break-after :always;
+    }
+
 </style>
 </head>
 
@@ -93,7 +109,7 @@
         <h4>Date de création : {{$invoice->created_at}}</h5>
         <h4> Date limite de validité : {{$invoice->limitDate}}</h5>
     </div>
-    <div>
+    <div id="firstPage">
         <table>
             <thead>
                 <th>Désignation</th>
@@ -146,12 +162,30 @@
         <p id="TTCAmount1">{{$invoice->TTCAmount}}</p>
         <p id="TTCAmount2">{{$invoice->TTCAmount}}</p>
 
-        <p id="custName"><?php
+        <p id="custName">
+            <?php
                 foreach($customers as $customer)
                 {
-                   echo $customer->name.' '.$customer->firstName;
+                    echo $customer->name.' '.$customer->firstName;
                 }
-        ?></p>
+        ?>
+        </p>
+        <p id="custAddress">
+            <?php
+                foreach($customers as $customer)
+                {
+                    echo $customer->address;
+                }
+            ?>
+        </p>
+        <p id="custAddress2">
+            <?php
+                foreach($customers as $customer)
+                {
+                    echo $customer->postalCode.' '.$customer->city;
+                }
+            ?>
+        </p>
     </div>
 
 

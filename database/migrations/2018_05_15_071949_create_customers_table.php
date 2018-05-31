@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('address', 60);
             $table->string('city', 30);
             $table->smallInteger('postalCode');
-            $table->string('email', 60)->unique();
+            $table->string('email', 60)();
             $table->integer('phone')->unsigned();
             $table->integer('mobilePhone')->unsigned();
             $table->integer('fax')->unsigned();

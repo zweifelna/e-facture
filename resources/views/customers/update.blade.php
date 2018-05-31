@@ -36,7 +36,7 @@
                         <p>{{ Form::number('fax', $customer->fax, ['class' => 'blackText, form-control']) }}</p>
                         <p>{{ Form::label('category', 'Catégorie', ['class' => 'blackText']) }}</p>
                         <p>{{ Form::select('category_id', $categories, $customer->category_id, array('class'=>'form-control')) }}</p>
-                        <p>{{Form::submit('Ajouter', ['class' => 'btn btn-primary'])}}</p>
+                        <p>{{Form::submit('Modifier', ['class' => 'btn btn-primary'])}}</p>
 
 
                     {!! Form::close() !!}
