@@ -85,8 +85,17 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                    <h2 class="justify-content-center center">Ajout d'un Service</h2>
-                    <br>
+                <h2 class="justify-content-center center">Ajout d'un Service</h2>
+                <br>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 {!! Form::open(['url' => 'invoices/'.$id.'/services/store']) !!}
                     {{ Form::hidden('invoice_id', $id) }}
                     <p>{{ Form::label('description', 'Description', ['class' => 'blackText']) }}</p>

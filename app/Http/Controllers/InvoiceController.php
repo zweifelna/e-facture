@@ -13,6 +13,7 @@ use App\models\Status;
 use App\models\Service;
 use App\models\Category;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Validator;
 
 class InvoiceController extends Controller
 {
@@ -31,6 +32,23 @@ class InvoiceController extends Controller
      */
     public function store(InvoiceRequest $request)
     {
+        /**Test the request datas */
+        $validator = Validator::make($request->all(), [
+            'limitDate' => 'required|date',
+            'HTAmount' => 'required',
+            'TTCAmount' => 'required',
+            'TVA' => 'required',
+            'customer_id' => 'required:digits:1',
+            'status_id' => 'required:digits:1',
+        ]);
+
+        /**If one or more tests fail, return an error */
+        if ($validator->fails()) {
+            return redirect('invoices/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         Invoice::create([
             'limitDate' => $request->limitDate,
             'HTAmount' => $request->HTAmount,
@@ -40,10 +58,7 @@ class InvoiceController extends Controller
             'status_id' => $request->status_id,
         ]);
 
-        $invoices = DB::table('invoices')
-            ->leftjoin('statuses', 'statuses.id', '=', 'invoices.status_id')
-            ->leftjoin('customers', 'invoices.customer_id', '=', 'customers.id')
-            ->get();
+        $invoices = Invoice::all();
             
 		return view('invoices.index', compact('invoices'));
     }
@@ -53,6 +68,22 @@ class InvoiceController extends Controller
      */
     public function addService(ServiceRequest $request)
     {
+        /**Test the request datas */
+        $validator = Validator::make($request->all(), [
+            'description' => 'required',
+            'hourNumber' => 'required',
+            'hourlyRate' => 'required',
+            'TVA' => 'required',
+            'invoice_id' => 'required:digits:1',
+        ]);
+
+        /**If one or more tests fail, return an error */
+        if ($validator->fails()) {
+            return redirect('invoices/'. $request->invoice_id)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         /**Calcul the amounts */
         $htAmount = $request->hourNumber * $request->hourlyRate;
         $tvaAmount = $htAmount * $request->TVA;
@@ -147,6 +178,23 @@ class InvoiceController extends Controller
      */
     public function update(InvoiceRequest $request)
     {
+        /**Test the request datas */
+        $validator = Validator::make($request->all(), [
+            'limitDate' => 'required|date',
+            'HTAmount' => 'required',
+            'TTCAmount' => 'required',
+            'TVA' => 'required',
+            'customer_id' => 'required:digits:1',
+            'status_id' => 'required:digits:1',
+        ]);
+
+        /**If one or more tests fail, return an error */
+        if ($validator->fails()) {
+            return redirect('invoices/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         /** Change the datas */
         $invoice = Invoice::find($request->id);
         $invoice->limitDate = $request->limitDate;
@@ -178,9 +226,10 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Invoice::find($id);
-        $customer->delete();
-        return back();
+        $invoice = Invoice::find($id);
+        $invoice->delete();
+        $invoices = Invoice::all();
+        return view('invoices.index', compact('invoices'));
 
     }
 

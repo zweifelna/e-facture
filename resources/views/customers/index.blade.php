@@ -40,7 +40,7 @@
                                             <td>{{$customer->name}}</td>
                                             <td>{{$customer->firstName}}</td>
                                             <td>{{$customer->company}}</td>
-                                            <td>+41 {{$customer->phone}}</td>
+                                            <td>{{$customer->phone}}</td>
                                             <td>{{$customer->email}}</td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#myModal{{$customer->id}}"><i class="fa fa-search fa-lg blackText"></i></a>
@@ -73,11 +73,11 @@
                                                         <h5>Email :</h5>
                                                         <p>{{$customer->email}}</p>
                                                         <h5>Téléphone :</h5>
-                                                        <p>+41 {{$customer->phone}}</p>
+                                                        <p>{{$customer->phone}}</p>
                                                         <h5>Mobile :</h5>
-                                                        <p>+41 {{$customer->mobilePhone}}</p>
+                                                        <p>{{$customer->mobilePhone}}</p>
                                                         <h5>Fax :</h5>
-                                                        <p>+41 {{$customer->fax}}</p>
+                                                        <p>{{$customer->fax}}</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

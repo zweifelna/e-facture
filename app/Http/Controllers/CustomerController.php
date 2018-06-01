@@ -17,29 +17,32 @@ class CustomerController extends Controller
         return view('customers.create', compact('categories'));
     }
 
+    /**Store the customer in the database */
     public function store(CustomerRequest $request)
     {
         /**Test the request datas */
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'firstName' => 'required',
-            'company' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'postalCode' => 'required',
-            'email' => 'required',
-            'phone' => 'required|max:4294967295',
-            'mobilePhone' => 'required|max:4294967295',
-            'fax' => 'required|max:4294967295',
-            'category_id' => 'required',
+            'name' => 'required|max:30',
+            'firstName' => 'required|max:30',
+            'company' => 'required|max:30',
+            'address' => 'required|max:60',
+            'city' => 'required|max:30',
+            'postalCode' => 'required|digits:4',
+            'email' => 'required|email',
+            'phone' => 'digits_between:0,10',
+            'mobilePhone' => 'digits_between:0,10',
+            'fax' => 'digits_between:0,10',
+            'category_id' => 'required:digits:1',
         ]);
 
+        /**If one or more tests fail, return an error */
         if ($validator->fails()) {
             return redirect('customers/create')
                         ->withErrors($validator)
                         ->withInput();
         }
 
+        /**Create the customer */
         Customer::create([
             'name' => $request->name,
             'firstName' => $request->firstName,
@@ -86,6 +89,28 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request)
     {
+        /**Test the request datas */
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:30',
+            'firstName' => 'required|max:30',
+            'company' => 'required|max:30',
+            'address' => 'required|max:60',
+            'city' => 'required|max:30',
+            'postalCode' => 'required|digits:4',
+            'email' => 'required|email',
+            'phone' => 'digits_between:0,10',
+            'mobilePhone' => 'digits_between:0,10',
+            'fax' => 'digits_between:0,10',
+            'category_id' => 'required:digits:1',
+        ]);
+
+        /**If one or more tests fail, return an error */
+        if ($validator->fails()) {
+            return redirect('customers/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         /** Change the datas */
         $customer = Customer::find($request->id);
         $customer->name = $request->name;

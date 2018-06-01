@@ -174,5 +174,13 @@ return [
         'size' => 'taille',
         'category_id' => 'catégorie',
         'company' => 'Société',
+        'HTAmount' => 'Montant HT',
+        'TVAAmount' => 'Montant TVA',
+        'TVA' => 'TVA',
+        'TTCAmount' => 'Montant TTC',
+        'limitDate' => 'Date limite',
+        'customer_id' => 'Client',
+        'status_id' => 'status_id',
+
     ],
 ];
