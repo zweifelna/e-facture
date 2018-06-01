@@ -31,8 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::resource('invoices', 'InvoiceController');
     Route::get('invoices/{n}', 'InvoiceController@show');
-    Route::get('generate', 'InvoiceController@chooseInvoice');
-    Route::post('generate', 'InvoiceController@generatePDF');
+    Route::get('invoices/generate/{n}', 'InvoiceController@generatePDF');
     Route::post('invoices/store', 'InvoiceController@store');
     Route::post('invoices/{n}/services/store', 'InvoiceController@addService');
     Route::get('invoices/edit/{n}', 'InvoiceController@edit');

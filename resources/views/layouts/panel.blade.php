@@ -65,39 +65,7 @@
         <div class="nav-side-menu">
                 <div class="brand">Panel Admin</div>
                 <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-                <div class="menu-list">
-                    <ul id="menu-content" class="menu-content collapse out">
-                        <li data-toggle="collapse" data-target="#customers" class="collapsed active">
-                        <i class="fa fa-address-book fa-lg fa-panel"></i>  Clients <span class="arrow"></span>
-                        </li>
-                        <ul class="sub-menu collapse" id="customers">
-                                <li class="active"><a href="{{ url('/customers') }}">Liste des clients</a></li>
-                                <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
-                            </ul>
-                        <li data-toggle="collapse" data-target="#invoices" class="collapsed">
-                            <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
-                        </li>
-                        <ul class="sub-menu collapse" id="invoices">
-                            <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
-                            <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
-                            <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
-                            
-                        </ul>
-                        
-                    <div class="signout">
-                        <li>
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
-                            </a> 
-                        </li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                    </ul>
-                </div>
-            </div>
+                @yield('menu')
             <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
             <div id="content">
                 @yield('content')

@@ -71,11 +71,6 @@
         left: 720px;
     }
 
-    img{
-      display: inline;
-      position: relative;
-    }
-
     #logoTitle{
       display: inline;
       position: relative;
@@ -109,6 +104,27 @@
         <h4>Date de création : {{$invoice->created_at}}</h5>
         <h4> Date limite de validité : {{$invoice->limitDate}}</h5>
     </div>
+    <div>
+        <h4>Vendeur</h4>
+        <p>ETML</p>
+        <p>Rue de Sébeillon 12</p>
+        <p>1004 Lausanne</p>
+    </div>
+    <div>
+            <h4>Acheteur</h4>
+            <?php
+                foreach($customers as $customer)
+                    {
+            ?>
+                        <p>{{$customer->name.' '.$customer->firstName}}</p>
+                        <p>{{$customer->address}}</p>
+                        <p>{{$customer->postalCode.' '.$customer->city}}</p>
+            <?php
+                    }
+
+            ?>
+            
+        </div>
     <div id="firstPage">
         <table>
             <thead>

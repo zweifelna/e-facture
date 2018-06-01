@@ -212,14 +212,6 @@ class InvoiceController extends Controller
         return view('invoices.edit', compact('invoice', 'statuses', 'customers'));
     }
 
-    public function chooseInvoice()
-    {
-        $invoices = Invoice::pluck('id', 'id');
-
-        return view('invoices.generate', compact('invoices'));
-    }
-
-
     
     /**
      * Delete the invoice
@@ -287,9 +279,9 @@ class InvoiceController extends Controller
     /**
      * Generate the invoice PDF
      */
-    public function generatePDF(InvoiceRequest $request)
+    public function generatePDF($id)
     {
-        $invoice = Invoice::find($request->id);
+        $invoice = Invoice::find($id);
         $services = Service::where('invoice_id', $invoice['id'])->get();
         $customers = Customer::where('id', $invoice['customer_id'])->get();
 

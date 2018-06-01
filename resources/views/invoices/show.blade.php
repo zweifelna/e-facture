@@ -1,5 +1,40 @@
 @extends('layouts.panel')
 
+@section('menu')
+<div class="menu-list">
+    <ul id="menu-content" class="menu-content collapse out">
+        <li data-toggle="collapse" data-target="#customers" class="collapsed">
+        <i class="fa fa-address-book fa-lg fa-panel"></i>  Clients <span class="arrow"></span>
+        </li>
+        <ul class="sub-menu collapse" id="customers">
+                <li><a href="{{ url('/customers') }}">Liste des clients</a></li>
+                <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
+            </ul>
+        <li data-toggle="collapse" data-target="#invoices" class="collapsed active">
+            <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
+        </li>
+        <ul class="sub-menu collapse" id="invoices">
+            <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
+            <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
+            <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
+            
+        </ul>
+        
+    <div class="signout">
+        <li>
+            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+                <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
+            </a> 
+        </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
+    </ul>
+</div>
+</div>
+@endsection
 
 @section('content')
 <div class="container">

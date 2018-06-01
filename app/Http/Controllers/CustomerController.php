@@ -81,7 +81,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $categories = Category::pluck('name', 'id');
 
-        return view('customers.update', compact('customer', 'categories'));
+        return view('customers.edit', compact('customer', 'categories'));
     }
 
     /**

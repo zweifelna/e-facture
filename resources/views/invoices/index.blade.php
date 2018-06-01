@@ -1,5 +1,41 @@
 @extends('layouts.panel')
 
+@section('menu')
+<div class="menu-list">
+    <ul id="menu-content" class="menu-content collapse out">
+        <li data-toggle="collapse" data-target="#customers" class="collapsed">
+        <i class="fa fa-address-book fa-lg fa-panel"></i>  Clients <span class="arrow"></span>
+        </li>
+        <ul class="sub-menu collapse" id="customers">
+                <li><a href="{{ url('/customers') }}">Liste des clients</a></li>
+                <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
+            </ul>
+        <li data-toggle="collapse" data-target="#invoices" class="collapsed active">
+            <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
+        </li>
+        <ul class="sub-menu collapse" id="invoices">
+            <li class="active"><a href="{{ url('/invoices') }}">Liste des factures</a></li>
+            <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
+            <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
+            
+        </ul>
+        
+    <div class="signout">
+        <li>
+            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+                <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
+            </a> 
+        </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
+    </ul>
+</div>
+</div>
+@endsection
+
 @section('script')
 <script type="text/javascript">
         $("#invoice_table").DataTable( {
@@ -42,6 +78,7 @@
                                             <td>
                                                 <a href="{{ url('/invoices/'.$invoice->id) }}"><i class="fa fa-search fa-lg blackText"></i></a>
                                                 <a href="{{ url('/invoices/edit/'.$invoice->id) }}"><i class="fa fa-edit fa-lg blackText"></i></a>
+                                                <a href="{{ url('/invoices/generate/'.$invoice->id) }}"><i class="fa fa-file fa-lg blackText"></i></a>
                                                 <a href="{{ url('/invoices/destroy/'.$invoice->id) }}" onclick="return confirm('Souhaitez-vous vraiment supprimer cette facture ?')"><i class="fa fa-times-circle fa-lg blackText"></i></a>
                                             </td>
                                         </tr>
