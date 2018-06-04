@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
+  <title>Facture</title>
   <style>
     body{
         font-family: Calibri;

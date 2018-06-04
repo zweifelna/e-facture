@@ -129,7 +129,7 @@ class CustomerController extends Controller
         /**Get the infos to show customer's details */
         $customer = Customer::find($request->id);
         $categories = Category::pluck('name', 'id');
-        return view('customers.update', compact('customer', 'categories'));
+        return view('customers.edit', compact('customer', 'categories'));
     }
     
     /**

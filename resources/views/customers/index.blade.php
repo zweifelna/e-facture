@@ -1,7 +1,7 @@
 @extends('layouts.panel')
 
 @section('script')
-<script type="text/javascript">
+<script>
     $(document).ready( function () {
         $("#customer_table").DataTable( {
             "iDisplayLength": 10
@@ -17,31 +17,37 @@
         <li data-toggle="collapse" data-target="#customers" class="collapsed active">
         <i class="fa fa-address-book fa-lg fa-panel"></i>  Clients <span class="arrow"></span>
         </li>
-        <ul class="sub-menu collapse" id="customers">
+        <li>
+            <ul class="sub-menu collapse" id="customers">
                 <li class="active"><a href="{{ url('/customers') }}">Liste des clients</a></li>
                 <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
             </ul>
+        </li>
         <li data-toggle="collapse" data-target="#invoices" class="collapsed">
             <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
         </li>
-        <ul class="sub-menu collapse" id="invoices">
-            <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
-            <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
-            <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
-            
-        </ul>
-        
-    <div class="signout">
         <li>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">
-                <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
-            </a> 
+            <ul class="sub-menu collapse" id="invoices">
+                <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
+                <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
+                <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
+            </ul>
         </li>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
+        
+    
+        <li>
+            <div class="signout">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
+                </a> 
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                </form>
+            </div>
+        </li>
+
+    
     </ul>
 </div>
 </div>
@@ -57,6 +63,49 @@
     </div>
     <div class="row justify-content-center">
             <div class="col-md-8">
+                <?php 
+                    foreach ($customers as $customer) {
+                ?>
+                        <!-- Modal -->
+                        <div id="myModal{{$customer->id}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                            
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Détails du client</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Numéro :</h5>
+                                        <p>{{$customer->id}}</p>
+                                        <h5>Nom :</h5>
+                                        <p>{{$customer->name}}</p>
+                                        <h5>Prénom :</h5>
+                                        <p>{{$customer->firstName}}</p>
+                                        <h5>Société :</h5>
+                                        <p>{{$customer->company}}</p>
+                                        <h5>Adresse :</h5>
+                                        <p>{{$customer->address.', '.$customer->postalCode.' '.$customer->city}}</p>
+                                        <h5>Email :</h5>
+                                        <p>{{$customer->email}}</p>
+                                        <h5>Téléphone :</h5>
+                                        <p>{{$customer->phone}}</p>
+                                        <h5>Mobile :</h5>
+                                        <p>{{$customer->mobilePhone}}</p>
+                                        <h5>Fax :</h5>
+                                        <p>{{$customer->fax}}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            
+                                </div>
+                            </div>
+                <?php
+                    }
+                ?>
                 <table id="customer_table" class="display table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -85,43 +134,7 @@
                                             </td>
                                         </tr>
 
-                                        <!-- Modal -->
-                                        <div id="myModal{{$customer->id}}" class="modal fade" role="dialog">
-                                                <div class="modal-dialog">
-                                            
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h4 class="modal-title">Détails du client</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h5>Numéro :</h5>
-                                                        <p>{{$customer->id}}</p>
-                                                        <h5>Nom :</h5>
-                                                        <p>{{$customer->name}}</p>
-                                                        <h5>Prénom :</h5>
-                                                        <p>{{$customer->firstName}}</p>
-                                                        <h5>Société :</h5>
-                                                        <p>{{$customer->company}}</p>
-                                                        <h5>Adresse :</h5>
-                                                        <p>{{$customer->address.', '.$customer->postalCode.' '.$customer->city}}</p>
-                                                        <h5>Email :</h5>
-                                                        <p>{{$customer->email}}</p>
-                                                        <h5>Téléphone :</h5>
-                                                        <p>{{$customer->phone}}</p>
-                                                        <h5>Mobile :</h5>
-                                                        <p>{{$customer->mobilePhone}}</p>
-                                                        <h5>Fax :</h5>
-                                                        <p>{{$customer->fax}}</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                                    </div>
-                                                </div>
-                                            
-                                                </div>
-                                            </div>
+                                        
                                         
                                     <?php
                                 }

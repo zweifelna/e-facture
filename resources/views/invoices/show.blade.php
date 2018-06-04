@@ -6,31 +6,34 @@
         <li data-toggle="collapse" data-target="#customers" class="collapsed">
         <i class="fa fa-address-book fa-lg fa-panel"></i>  Clients <span class="arrow"></span>
         </li>
-        <ul class="sub-menu collapse" id="customers">
+        <li>
+            <ul class="sub-menu collapse" id="customers">
                 <li><a href="{{ url('/customers') }}">Liste des clients</a></li>
                 <li><a href="{{ url('/customers/create') }}">Ajouter un client</a></li>
             </ul>
+        </li>
         <li data-toggle="collapse" data-target="#invoices" class="collapsed active">
             <i class="fa fa-calculator fa-lg fa-panel"></i>  Factures <span class="arrow"></span>
         </li>
-        <ul class="sub-menu collapse" id="invoices">
-            <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
-            <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
-            <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
-            
-        </ul>
-        
-    <div class="signout">
         <li>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">
-                <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
-            </a> 
+            <ul class="sub-menu collapse" id="invoices">
+                <li class=""><a href="{{ url('/invoices') }}">Liste des factures</a></li>
+                <li><a href="{{ url('/invoices/create') }}">Ajouter une facture</a></li>
+                <li><a href="{{ url('/generate') }}">Générer un pdf</a></li>
+                
+            </ul>
         </li>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
+        <li>
+            <div class="signout">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out fa-lg fa-panel"></i> Déconnexion
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                </form>
+            </div> 
+        </li>
     </ul>
 </div>
 </div>
@@ -66,23 +69,20 @@
                 foreach ($invoices as $invoice) {
                     ?>
                         <div class="col-md-4">
-                            <h3>Total HT : {{$invoice->HTAmount}}</h4>
+                            <h3>Total HT : {{$invoice->HTAmount}}</h3>
                             
                         </div>
                         <div class="col-md-4">
-                            <h3>Total TVA : {{$invoice->TVA}}</h4>
+                            <h3>Total TVA : {{$invoice->TVA}}</h3>
                         </div>
                         <div class="col-md-4">
-                            <h3>Total TTC : {{$invoice->TTCAmount}}</h4>
+                            <h3>Total TTC : {{$invoice->TTCAmount}}</h3>
                         </div>
                         <?php
                          }
-                    ?>
-                    
+                    ?>                
     </div>
     <br>
-
-
 
     <div class="row justify-content-center">
             <div class="col-md-8">
@@ -90,14 +90,16 @@
                 <br>
                 <table class="table" style="width:100%">
                         <thead>
-                            <th scope="col">Description</th>
-                            <th scope="col">Heures</th>
-                            <th scope="col">Tarif horaire</th>
-                            <th scope="col">Montant HT</th>
-                            <th scope="col">TVA</th>
-                            <th scope="col">Montant TVA</th>
-                            <th scope="col">Montant TTC</th>
-                            <th scope="col"></th>
+                            <tr>
+                                <th scope="col">Description</th>
+                                <th scope="col">Heures</th>
+                                <th scope="col">Tarif horaire</th>
+                                <th scope="col">Montant HT</th>
+                                <th scope="col">TVA</th>
+                                <th scope="col">Montant TVA</th>
+                                <th scope="col">Montant TTC</th>
+                                <th scope="col"></th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php
